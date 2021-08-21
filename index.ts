@@ -13,13 +13,13 @@ const err1: SwapKeyValue<Obj> = {
   bb: 'y6666666',
 }
 const err2: SwapKeyValue<Obj> = {
-  aa: 'x', // Известен
-  bb: 'y44',
+  aa: 'x',
+  bb: 'y',
   d: 'zz'
 }
 const err3: SwapKeyValue<Obj> = {
-  aa: 'y',
-  bb: 'y'
+  aa: 'x',
+  bb: 'x'
 }
 
 
