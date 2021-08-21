@@ -23,24 +23,24 @@ const err3: SwapKeyValue<Obj> = {
 }
 
 
-type SwapKeyValue<T extends Record<string ,string>> = {
-  [K in T[keyof T] ]: ModelKeyValue<T, K>['key'];
+type RecordString = Record<string, string>;
+type SwapKeyValue<T extends RecordString> = {
+  [K in ObjValues<T>]: ModelKeyValue<T, K>['key'];
 };
 
-// type SwapKeyValue<T extends Record<string ,string>> = {
-//   [K in T[keyof T] ]: T[K]
-// };
 
 // *  *  *   Utils
-type CreateStructure<T extends { [key: string]: string; }> = {
+type CreateStructure<T extends RecordString> = {
   [key in keyof T]: {
+    // Значение не переворачиваю
     key: key,
     value: T[key]
   };
 } // *  *  *
-type ModelKeyValue<T extends {[key: string]: string}, K extends T[keyof T]  > = (
+type ObjValues<T extends Record<string, any>> = T[keyof T];
+type ModelKeyValue<T extends RecordString, K extends T[keyof T]  > = (
   Extract<
-    CreateStructure<T>[keyof CreateStructure<T>],
+    ObjValues<CreateStructure<T>>,
     {
       // Перевернули значения
       value: K, // Известен
