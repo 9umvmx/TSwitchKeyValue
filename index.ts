@@ -10,11 +10,10 @@ const obj: SwapKeyValue<Obj> = {
 
 const err1: SwapKeyValue<Obj> = {
   aa: 'x',
-  bb: 'y6',
-  d: 'zz'
+  bb: 'y6666666',
 }
 const err2: SwapKeyValue<Obj> = {
-  aa: 'x',
+  aa: 'x', // Известен
   bb: 'y44',
   d: 'zz'
 }
@@ -25,7 +24,7 @@ const err3: SwapKeyValue<Obj> = {
 
 
 type SwapKeyValue<T extends Record<string ,string>> = {
-  [K in T[keyof T] ]: Extract<ModelKeyValue<T, K>['value'], ModelKeyValue<T, K>>['value'];
+  [K in T[keyof T] ]: ModelKeyValue<T, K>['key'];
 };
 
 // type SwapKeyValue<T extends Record<string ,string>> = {
@@ -33,10 +32,19 @@ type SwapKeyValue<T extends Record<string ,string>> = {
 // };
 
 // *  *  *   Utils
-type CreateStructure<T extends {[key: string]: string;} > = {
-  [K in keyof T extends string ? keyof T :  never]: ModelKeyValue<T, K>;
+type CreateStructure<T extends { [key: string]: string; }> = {
+  [key in keyof T]: {
+    key: key,
+    value: T[key]
+  };
 } // *  *  *
-type ModelKeyValue<T extends {[key: string]: string}, K extends string  > = {
-  key: K;
-  value: T[K];
-}
+type ModelKeyValue<T extends {[key: string]: string}, K extends T[keyof T]  > = (
+  Extract<
+    CreateStructure<T>[keyof CreateStructure<T>],
+    {
+      // Перевернули значения
+      value: K, // Известен
+      key: keyof T // Неизвестен
+    }
+  >
+);
