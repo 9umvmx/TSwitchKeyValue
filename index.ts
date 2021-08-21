@@ -39,7 +39,7 @@ type CreateStructure<T extends RecordString> = {
     value: T[key]
   };
 } // *  *  *
-type ModelKeyValue<T extends RecordString, K extends T[keyof T]  > = (
+type ModelKeyValue<T extends RecordString, K extends ObjValues<T>  > = (
   Extract<
     ObjValues<CreateStructure<T>>,
     {
