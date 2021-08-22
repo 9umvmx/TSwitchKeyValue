@@ -22,6 +22,32 @@ const err3: SwapKeyValue<Obj> = {
   bb: 'x'
 }
 
+// Как создать generic?
+type SwapKeyValue<T> = any
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// РЕШЕНИЕ
+
 
 type RecordString = Record<string, string>;
 
