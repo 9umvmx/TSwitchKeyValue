@@ -15,7 +15,7 @@ const err1: SwapKeyValue<Obj> = {
 const err2: SwapKeyValue<Obj> = {
   aa: 'x',
   bb: 'y',
-  d: 'zz'
+  dddddddddddddddd: 'zz'
 }
 const err3: SwapKeyValue<Obj> = {
   aa: 'x',
@@ -24,6 +24,7 @@ const err3: SwapKeyValue<Obj> = {
 
 
 type RecordString = Record<string, string>;
+
 type SwapKeyValue<T extends RecordString> = {
   [K in ObjValues<T>]: ModelKeyValue<T, K>['key'];
 };
