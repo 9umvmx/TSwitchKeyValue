@@ -33,27 +33,16 @@ type SwapKeyValue<T extends RecordString> = {
 // Зменить на RecordString в начале при открытие
 type ObjValues<T extends Record<string, any>> = T[keyof T];
 // *  *  *   Utils
-<<<<<<< HEAD
-type CreateStructure<T extends RecordString> = {
-=======
 type CreateStructure<T extends RecordString> = ObjValues<{
->>>>>>> 81f8a87 (Answer)
   [key in keyof T]: {
     // Значение не переворачиваю
     key: key,
     value: T[key]
   };
-<<<<<<< HEAD
-} // *  *  *
-type ModelKeyValue<T extends RecordString, K extends ObjValues<T>> = (
-  Extract<
-    ObjValues<CreateStructure<T>>,
-=======
 }> // *  *  *
 type ModelKeyValue<T extends RecordString, K extends ObjValues<T>> = (
   Extract<
     CreateStructure<T>,
->>>>>>> 81f8a87 (Answer)
     {
       // Перевернули значения
       value: K, // Известен
