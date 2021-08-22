@@ -22,14 +22,31 @@ const err3: SwapKeyValue<Obj> = {
   bb: 'x'
 }
 
-// Как создать generic?
-type SwapKeyValue<T> = any
+
+type RecordString = Record<string, string>;
+
+type SwapKeyValue<T extends RecordString> = {
+  [K in ObjValues<T>]: ModelKeyValue<T, K>['key'];
+};
 
 
-
-
-
-
-
-
-
+// Зменить на RecordString в начале при открытие
+type ObjValues<T extends Record<string, any>> = T[keyof T];
+// *  *  *   Utils
+type CreateStructure<T extends RecordString> = {
+  [key in keyof T]: {
+    // Значение не переворачиваю
+    key: key,
+    value: T[key]
+  };
+} // *  *  *
+type ModelKeyValue<T extends RecordString, K extends ObjValues<T>> = (
+  Extract<
+    ObjValues<CreateStructure<T>>,
+    {
+      // Перевернули значения
+      value: K, // Известен
+      key: keyof T // Неизвестен
+    }
+  >
+);
