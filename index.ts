@@ -25,15 +25,17 @@ const err3: SwapKeyValue<Obj> = {
 
 type RecordString = Record<string, string>;
 
-type SwapKeyValue<T extends RecordString> = {
+// Решая задачу я подумал, как программисты решают задачу для
+// смены значений между двумя переменными. Создают третью временную переменную.
+// Я  решил создать структуру {key, value}
+type SwapKeyValue1<T extends RecordString> = {
   [K in ObjValues<T>]: ModelKeyValue<T, K>['key'];
 };
 
 
-// Зменить на RecordString в начале при открытие
 type ObjValues<T extends Record<string, any>> = T[keyof T];
 // *  *  *   Utils
-type CreateStructure<T extends RecordString> = ObjValues<{
+type CreateModelSet<T extends RecordString> = ObjValues<{
   [key in keyof T]: {
     // Значение не переворачиваю
     key: key,
@@ -42,7 +44,7 @@ type CreateStructure<T extends RecordString> = ObjValues<{
 }> // *  *  *
 type ModelKeyValue<T extends RecordString, K extends ObjValues<T>> = (
   Extract<
-    CreateStructure<T>,
+    CreateModelSet<T>,
     {
       // Перевернули значения
       value: K, // Известен
@@ -50,3 +52,12 @@ type ModelKeyValue<T extends RecordString, K extends ObjValues<T>> = (
     }
   >
 );
+
+
+
+
+
+// Но задача решается проще, зная синтаксис typeScript
+type SwapKeyValue<T extends RecordString> = {
+  [key in keyof T as T[key]]: key
+}
